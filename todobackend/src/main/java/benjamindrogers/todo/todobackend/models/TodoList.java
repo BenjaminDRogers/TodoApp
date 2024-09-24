@@ -19,4 +19,8 @@ public class TodoList {
         list.add("");
     }
 
+    public void updateItem(int index, String newItem) {
+        list.set(index, newItem);
+    }
+
 }
