@@ -15,4 +15,8 @@ public class TodoList {
         return list;
     }
 
+    public void addItem() {
+        list.add("");
+    }
+
 }
