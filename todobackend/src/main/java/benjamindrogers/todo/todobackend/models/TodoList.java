@@ -5,10 +5,14 @@ import java.util.Arrays;
 
 public class TodoList {
     
-    ArrayList<String> list;
+    private ArrayList<String> list;
 
     public TodoList() {
-        list = new ArrayList<String>(Arrays.asList("test"));
+        this.list = new ArrayList<String>(Arrays.asList("test1", "test2"));
+    }
+
+    public ArrayList<String> getList() {
+        return list;
     }
 
 }
