@@ -23,4 +23,8 @@ public class TodoList {
         list.set(index, newItem);
     }
 
+    public void removeItem(int index) {
+        list.remove(index);
+    }
+
 }
