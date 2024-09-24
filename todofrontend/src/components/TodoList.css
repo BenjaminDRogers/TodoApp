@@ -1,0 +1,12 @@
+.Card-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.Card {
+    margin: 20px;
+}
+
+.Add-button {
+    margin-bottom: 20px !important;
+}

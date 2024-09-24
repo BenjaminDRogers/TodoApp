@@ -5,6 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
+import './TodoList.css';
+
 function TodoList() {
     const [list, setList] = useState([]);
 
@@ -87,16 +89,16 @@ function TodoList() {
     return (
         <div>
             {list.list?.map((item, index) => (
-                <Card key={generateKey(index)} sx={{ minWidth: 275 }}>
+                <Card key={generateKey(index)} sx={{ minWidth: 275 }} className="Card">
                     <CardContent>
-                        <TextField id="standard-basic" label="Standard" variant="standard" defaultValue={item} onKeyPress={(event) => {onKeyPressed(event, index)}} />
+                        <TextField id="standard-basic" variant="standard" defaultValue={item} onKeyPress={(event) => {onKeyPressed(event, index)}} />
                     </CardContent>
-                    <CardActions>
+                    <CardActions className="Card-actions">
                         <Button size="small" onClick={() => {removeItem(index)}}>Remove</Button>
                     </CardActions>
                 </Card>
             ))}
-            <Button size="small" onClick={addItem}>Add New Item</Button>
+            <Button size="small" variant="contained" onClick={addItem} className="Add-button">Add New Item</Button>
         </div>
     );
 }
