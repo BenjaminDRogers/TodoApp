@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
 function TodoList() {
-    const [posts, setPosts] = useState([]);
+    const [list, setList] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000')
-            .then((resource) => res.json())
+        fetch('/todo')
+            .then((resource) => resource.json())
             .then((data) => {
                 console.log(data);
-                setPosts(data);
+                setList(data);
             })
             .catch((error) => {
                 console.log(error.message);
@@ -17,7 +17,8 @@ function TodoList() {
 
     return (
         <div>
-            {posts}
+            {list.list}
         </div>
     );
 }
+export default TodoList;
