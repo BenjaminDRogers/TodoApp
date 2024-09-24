@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -29,7 +30,7 @@ function TodoList() {
         };
         fetch('/todo', fetchOptions)
         .then((resource) => resource.json())
-        .then((data) => {
+        .then(() => {
             getList();
         })
         .catch((error) => {
@@ -38,6 +39,7 @@ function TodoList() {
     }
 
     function updateItem(index, text) {
+        console.log('update: ', index);
         const fetchOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -45,7 +47,7 @@ function TodoList() {
         };
         fetch('/todo', fetchOptions)
         .then((resource) => resource.json())
-        .then((data) => {
+        .then(() => {
             getList();
         })
         .catch((error) => {
@@ -54,22 +56,47 @@ function TodoList() {
     }
 
     function onKeyPressed(event, index) {
+        console.log('onkeypressed!');
         if (event.key === 'Enter') {
-            console.log('enter pressed!');
+            console.log('onkeypressed: enter!');
             updateItem(index, event.target.value);
         }
     }
 
+    function removeItem(index) {
+        console.log('remove: ', index);
+        const fetchOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ index: index, text: '' })
+        };
+        fetch('/todo', fetchOptions)
+        .then((resource) => resource.json())
+        .then(() => {
+            getList();
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+    }
+
+    const generateKey = (prefix) => {
+        return `${prefix}_${new Date().getTime()}`;
+    }
+
     return (
         <div>
-            <Button size="small" onClick={addItem}>Press Me</Button>
             {list.list?.map((item, index) => (
-                <Card key={index} sx={{ minWidth: 275 }}>
+                <Card key={generateKey(index)} sx={{ minWidth: 275 }}>
                     <CardContent>
-                        <TextField id="standard-basic" label="Standard" variant="standard" defaultValue={item} onKeyDown={(event) => {onKeyPressed(event, index)}} />
+                        <TextField id="standard-basic" label="Standard" variant="standard" defaultValue={item} onKeyPress={(event) => {onKeyPressed(event, index)}} />
                     </CardContent>
+                    <CardActions>
+                        <Button size="small" onClick={() => {removeItem(index)}}>Remove</Button>
+                    </CardActions>
                 </Card>
             ))}
+            <Button size="small" onClick={addItem}>Add New Item</Button>
         </div>
     );
 }
