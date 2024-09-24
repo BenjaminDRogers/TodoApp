@@ -2,6 +2,7 @@ package benjamindrogers.todo.todobackend.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,12 @@ public class TodoListController {
     @PutMapping
     public ResponseEntity<TodoList> updateItem(@RequestBody ItemRequestBody itemRequestBody) {
         todoList.updateItem(itemRequestBody.getIndex(), itemRequestBody.getText());
+        return new ResponseEntity<TodoList>(todoList, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<TodoList> removeItem(@RequestBody ItemRequestBody itemRequestBody) {
+        todoList.removeItem(itemRequestBody.getIndex());
         return new ResponseEntity<TodoList>(todoList, HttpStatus.OK);
     }
 
