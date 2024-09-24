@@ -25,8 +25,7 @@ function TodoList() {
     function addItem() {
         const fetchOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: 'React POST Request Example' })
+            headers: { 'Content-Type': 'application/json' }
         };
         fetch('/todo', fetchOptions)
         .then((resource) => resource.json())
@@ -38,9 +37,26 @@ function TodoList() {
         });
     }
 
-    function onKeyPressed(event) {
+    function updateItem(index, text) {
+        const fetchOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ index: index, text: text })
+        };
+        fetch('/todo', fetchOptions)
+        .then((resource) => resource.json())
+        .then((data) => {
+            getList();
+        })
+        .catch((error) => {
+            console.log(error.message);
+        });
+    }
+
+    function onKeyPressed(event, index) {
         if (event.key === 'Enter') {
-            console.log('test baby');
+            console.log('enter pressed!');
+            updateItem(index, event.target.value);
         }
     }
 
@@ -50,7 +66,7 @@ function TodoList() {
             {list.list?.map((item, index) => (
                 <Card key={index} sx={{ minWidth: 275 }}>
                     <CardContent>
-                        <TextField id="standard-basic" label="Standard" variant="standard" onKeyDown={onKeyPressed} />
+                        <TextField id="standard-basic" label="Standard" variant="standard" defaultValue={item} onKeyDown={(event) => {onKeyPressed(event, index)}} />
                     </CardContent>
                 </Card>
             ))}
